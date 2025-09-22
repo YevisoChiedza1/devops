@@ -1,3 +1,3 @@
 This is the first lab
 
-A workflow for my Hello World App
+Lab 02: A GitHub workflow for the Hello World app
