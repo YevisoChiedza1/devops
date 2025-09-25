@@ -1,6 +1,6 @@
 Software Engineering Methods
 
-Master Build Status![Build](https://github.com/YevisoChiedza1/devops/actions/workflows/main.yml/badge.svg?branch=master)
+Master Build Status![Build](https://github.com/YevisoChiedza1/devops/actions/workflows/main.yml/badge.svg)
 
 Develop Build Status ![Build](https://github.com/YevisoChiedza1/devops/actions/workflows/main.yml/badge.svg?branch=develop)
 
