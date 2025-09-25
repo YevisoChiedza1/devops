@@ -1,8 +1,8 @@
 Software Engineering Methods
 
-Master Build Status![Build Status](https://github.com/YevisoChiedza1/devops/actions/workflows/main.yml/badge.svg)
+Master Build Status![Build](https://github.com/YevisoChiedza1/devops/actions/workflows/main.yml/badge.svg?branch=master)
 
-Develop Build Status ![Build Status](https://github.com/YevisoChiedza1/devops/actions/workflows/main.yml/badge.svg?branch=develop)
+Develop Build Status ![Build](https://github.com/YevisoChiedza1/devops/actions/workflows/main.yml/badge.svg?branch=develop)
 
 License [![LICENSE](https://img.shields.io/github/license/YevisoChiedza1/devops.svg?style=flat-square)](https://github.com/YevisoChiedza1/devops/blob/master/LICENSE)
 
