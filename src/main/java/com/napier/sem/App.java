@@ -93,6 +93,7 @@ public class App
                             "WHERE e.emp_no = " + ID;
 
 
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
@@ -112,12 +113,17 @@ public class App
             else
                 return null;
         }
+
+
         catch (Exception e)
         {
             System.out.println(e.getMessage());
             System.out.println("Failed to get employee details");
             return null;
         }
+
+
+
     }
 
     public void displayEmployee(Employee emp)
@@ -135,6 +141,74 @@ public class App
         }
     }
 
+
+    //Get the first 10 employees
+    public void getEmployees(){
+        try {
+            // Create SQL statement
+            String query = "SELECT emp_no, first_name, last_name FROM employees LIMIT 10";
+            Statement stmt = con.createStatement();
+
+            // Execute query
+            ResultSet rset = stmt.executeQuery(query);
+
+            // Print each employee
+            System.out.println("First 10 Employees:");
+            while (rset.next()) {
+                int empNo = rset.getInt("emp_no");
+                String firstName = rset.getString("first_name");
+                String lastName = rset.getString("last_name");
+                System.out.println(empNo + ": " + firstName + " " + lastName);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Method to display employee information of all senior engineers
+     *
+     */
+    public void employeeTitle(){
+
+        try {
+
+            //Write the sql query
+            String query1 = "SELECT e.emp_no, e.first_name, e.last_name, s.salary, t.title " +
+                    "FROM employees e " +
+                    "JOIN salaries s ON s.emp_no = e.emp_no " +
+                    "JOIN titles t ON t.emp_no = e.emp_no " +
+                    "WHERE t.title = 'Senior Engineer' " +
+                    "LIMIT 20";
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute query
+            ResultSet rset = stmt.executeQuery(query1);
+
+            //print each employee
+            while (rset.next()) {
+
+                int emp_no = rset.getInt("emp_no");
+                String first_name = rset.getString("first_name");
+                String last_name = rset.getString("last_name");
+                String title = rset.getString("title");
+                int salary = rset.getInt("salary");
+
+                //print the results
+                System.out.println( emp_no + " " + first_name + " " + last_name + "\n"
+                                + title + "\n"
+                                + "Salary:" + salary + "\n" );
+            }
+        }
+
+            catch (SQLException e){
+                System.out.println("SQL Error: " + e.getMessage());
+            }
+        }
+
+
     public static void main(String[] args)
     {
         // Create new Application
@@ -146,6 +220,11 @@ public class App
         Employee emp = a.getEmployee(255530);
         // Display results
         a.displayEmployee(emp);
+        System.out.println("Listing the first 10 employees");
+        a.getEmployees();
+
+        System.out.println("Listing details on senior engineers");
+        a.employeeTitle();
 
         // Disconnect from database
         a.disconnect();
