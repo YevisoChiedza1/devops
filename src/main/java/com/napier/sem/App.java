@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * This is main application point that connects us to an SQL server to allow us to connect to the correct database.
@@ -142,71 +143,48 @@ public class App
     }
 
 
-    //Get the first 10 employees
-    public void getEmployees(){
-        try {
-            // Create SQL statement
-            String query = "SELECT emp_no, first_name, last_name FROM employees LIMIT 10";
+
+    /**
+     * Gets all the current employees and salaries.
+     * @return A list of all employees and salaries, or null if there is an error.
+     */
+    public ArrayList<Employee> getAllSalaries()
+    {
+        try
+        {
+            // Create an SQL statement
             Statement stmt = con.createStatement();
-
-            // Execute query
-            ResultSet rset = stmt.executeQuery(query);
-
-            // Print each employee
-            System.out.println("First 10 Employees:");
-            while (rset.next()) {
-                int empNo = rset.getInt("emp_no");
-                String firstName = rset.getString("first_name");
-                String lastName = rset.getString("last_name");
-                System.out.println(empNo + ": " + firstName + " " + lastName);
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary "
+                            + "FROM employees, salaries "
+                            + "WHERE employees.emp_no = salaries.emp_no AND salaries.to_date = '9999-01-01' "
+                            + "ORDER BY employees.emp_no ASC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract employee information
+            ArrayList<Employee> employees = new ArrayList<Employee>();
+            while (rset.next())
+            {
+                Employee emp = new Employee();
+                emp.emp_no = rset.getInt("employees.emp_no");
+                emp.first_name = rset.getString("employees.first_name");
+                emp.last_name = rset.getString("employees.last_name");
+                emp.salary = rset.getInt("salaries.salary");
+                employees.add(emp);
             }
-        } catch (SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            return employees;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get salary details");
+            return null;
         }
     }
 
-    /**
-     * Method to display employee information of all senior engineers
-     *
-     */
-    public void employeeTitle(){
-
-        try {
-
-            //Write the sql query
-            String query1 = "SELECT e.emp_no, e.first_name, e.last_name, s.salary, t.title " +
-                    "FROM employees e " +
-                    "JOIN salaries s ON s.emp_no = e.emp_no " +
-                    "JOIN titles t ON t.emp_no = e.emp_no " +
-                    "WHERE t.title = 'Senior Engineer' " +
-                    "LIMIT 20";
 
 
-            Statement stmt = con.createStatement();
-
-            // Execute query
-            ResultSet rset = stmt.executeQuery(query1);
-
-            //print each employee
-            while (rset.next()) {
-
-                int emp_no = rset.getInt("emp_no");
-                String first_name = rset.getString("first_name");
-                String last_name = rset.getString("last_name");
-                String title = rset.getString("title");
-                int salary = rset.getInt("salary");
-
-                //print the results
-                System.out.println( emp_no + " " + first_name + " " + last_name + "\n"
-                                + title + "\n"
-                                + "Salary:" + salary + "\n" );
-            }
-        }
-
-            catch (SQLException e){
-                System.out.println("SQL Error: " + e.getMessage());
-            }
-        }
 
 
     public static void main(String[] args)
@@ -220,11 +198,13 @@ public class App
         Employee emp = a.getEmployee(255530);
         // Display results
         a.displayEmployee(emp);
-        System.out.println("Listing the first 10 employees");
-        a.getEmployees();
+        
 
-        System.out.println("Listing details on senior engineers");
-        a.employeeTitle();
+        // Extract employee salary information
+        ArrayList<Employee> employees = a.getAllSalaries();
+
+        // Test the size of the returned data - should be 240124
+        System.out.println(employees.size());
 
         // Disconnect from database
         a.disconnect();

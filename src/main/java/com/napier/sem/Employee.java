@@ -1,9 +1,5 @@
 package com.napier.sem;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Connection;
-
 /**
  * Represents an employee
  */
