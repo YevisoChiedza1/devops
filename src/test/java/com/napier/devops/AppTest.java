@@ -33,22 +33,7 @@ public class AppTest
         app.printSalaries(employess);
     }
 
-    /**
-     * @Test
-     *
-     * This tells JUnit: “Run this method as a test.”
 
-     * void printSalariesTestContainsNull()
-     *
-     * This is the name of the test. It’s testing what happens when the employee list contains a null.
-     *
-     * ArrayList<Employee> employess = new ArrayList<Employee>();
-     *
-     * Creates an empty list of Employee objects.
-     *
-     * employess.add(null);
-     *
-     * Adds a null value to the list. This simulates a situation where one of the employees is missing or not properly initialized.*/
     @Test
     void printSalariesTestContainsNull()
     {
